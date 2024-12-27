@@ -4459,11 +4459,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Desktop\\.Net\\NzWalks\\NZWalksWebApi\\NZWalksWebApi.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\Gitwalks\\NZWALKS\\NZWalksWebApi\\NZWalksWebApi.csproj",
       "projectName": "NZWalksWebApi",
-      "projectPath": "C:\\Users\\User\\Desktop\\.Net\\NzWalks\\NZWalksWebApi\\NZWalksWebApi.csproj",
+      "projectPath": "C:\\Users\\User\\Desktop\\Gitwalks\\NZWALKS\\NZWalksWebApi\\NZWalksWebApi.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Desktop\\.Net\\NzWalks\\NZWalksWebApi\\obj\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\Gitwalks\\NZWALKS\\NZWalksWebApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
