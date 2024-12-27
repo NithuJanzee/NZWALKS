@@ -1,0 +1,6 @@
+@NZWalksWebApi_HostAddress = http://localhost:5119
+
+GET {{NZWalksWebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
