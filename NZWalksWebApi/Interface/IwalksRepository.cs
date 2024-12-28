@@ -5,5 +5,6 @@ namespace NZWalksWebApi.Interface
     public interface IwalksRepository
     {
         Task<Walk> CreateWalk(Walk walk);
+        Task<List<Walk>> GetAllWalks();
     }
 }

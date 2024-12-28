@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NZWalksWebApi.DTO;
 using NZWalksWebApi.Interface;
 using NZWalksWebApi.Models.Domains;
+using System.Reflection.Metadata.Ecma335;
 
 namespace NZWalksWebApi.Controllers
 {
@@ -30,6 +31,13 @@ namespace NZWalksWebApi.Controllers
 
             return Ok(_mapper.Map<WalkDTO>(dataDomainModal));
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllWalks()
+        {
+            var data = await _walksRepository.GetAllWalks();
+            return Ok(_mapper.Map<List<WalkDTO>>(data));
         }
     }
 }
