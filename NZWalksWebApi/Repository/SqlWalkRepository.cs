@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NZWalksWebApi.Data;
+using NZWalksWebApi.DTO;
 using NZWalksWebApi.Interface;
 using NZWalksWebApi.Models.Domains;
 
@@ -36,6 +37,23 @@ namespace NZWalksWebApi.Repository
             if (Data == null) throw new Exception("Not Found");
 
             return Data;
+        }
+
+
+        public async Task<Walk> Update (Guid id , Walk walk)
+        {
+            var findData = await _dbContext.walks.FirstOrDefaultAsync(x =>x.Id == id);
+            if (findData == null) throw new Exception("Not Found");
+
+            findData.Name = walk.Name;
+            findData.WalkImageUrl = walk.WalkImageUrl;
+            findData.Description = walk.Description;
+            findData.lengthInKm = walk.lengthInKm;
+            findData.RegionID = walk.RegionID;
+            findData.DifficultyID = walk.DifficultyID;
+            await _dbContext.SaveChangesAsync();
+
+            return findData;
         }
     }
 }

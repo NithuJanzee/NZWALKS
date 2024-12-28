@@ -46,5 +46,16 @@ namespace NZWalksWebApi.Controllers
             var data = await _walksRepository.GetById(Id);
             return Ok(_mapper.Map<WalkDTO>(data));
         }
+
+        [HttpPut("{Id:guid}")]
+        public async Task<IActionResult> UpdateWalks(Guid Id , WalkRequestDTO dTO)
+        {
+            var MapData = _mapper.Map<Walk>(dTO);
+            var SentData = await _walksRepository.Update(Id,MapData);
+            if(SentData == null)return NotFound();
+
+            return Ok(_mapper.Map<WalkDTO>(SentData));
+        }
+
     }
 }

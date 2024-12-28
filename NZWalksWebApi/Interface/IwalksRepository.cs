@@ -1,4 +1,5 @@
-﻿using NZWalksWebApi.Models.Domains;
+﻿using NZWalksWebApi.DTO;
+using NZWalksWebApi.Models.Domains;
 
 namespace NZWalksWebApi.Interface
 {
@@ -7,5 +8,6 @@ namespace NZWalksWebApi.Interface
         Task<Walk> CreateWalk(Walk walk);
         Task<List<Walk>> GetAllWalks();
         Task<Walk> GetById(Guid Id);
+        Task<Walk> Update(Guid id, Walk walk);
     }
 }
