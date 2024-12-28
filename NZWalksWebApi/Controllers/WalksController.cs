@@ -39,5 +39,12 @@ namespace NZWalksWebApi.Controllers
             var data = await _walksRepository.GetAllWalks();
             return Ok(_mapper.Map<List<WalkDTO>>(data));
         }
+
+        [HttpGet("{Id:guid}")]
+        public async Task<IActionResult> GetByID(Guid Id)
+        {
+            var data = await _walksRepository.GetById(Id);
+            return Ok(_mapper.Map<WalkDTO>(data));
+        }
     }
 }

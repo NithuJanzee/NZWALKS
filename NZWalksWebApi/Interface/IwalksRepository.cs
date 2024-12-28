@@ -6,5 +6,6 @@ namespace NZWalksWebApi.Interface
     {
         Task<Walk> CreateWalk(Walk walk);
         Task<List<Walk>> GetAllWalks();
+        Task<Walk> GetById(Guid Id);
     }
 }

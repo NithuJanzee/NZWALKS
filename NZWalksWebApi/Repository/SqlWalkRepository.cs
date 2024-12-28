@@ -23,7 +23,19 @@ namespace NZWalksWebApi.Repository
 
         public async Task<List<Walk>> GetAllWalks()
         {
-            return await _dbContext.walks.ToListAsync();
+            return await _dbContext.walks.Include("Difficulty").Include("Region").ToListAsync();
+        }
+
+        public async Task<Walk> GetById(Guid Id)
+        {
+            var Data = await _dbContext.walks.
+                Include("Difficulty")
+                .Include("Region")
+                .FirstOrDefaultAsync(x => x.Id == Id);
+
+            if (Data == null) throw new Exception("Not Found");
+
+            return Data;
         }
     }
 }
