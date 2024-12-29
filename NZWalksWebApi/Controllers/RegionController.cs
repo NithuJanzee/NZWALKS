@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NZWalksWebApi.CoustomValidationFilter;
 using NZWalksWebApi.Data;
 using NZWalksWebApi.DTO;
 using NZWalksWebApi.Interface;
@@ -42,17 +43,23 @@ namespace NZWalksWebApi.Controllers
         }
 
         [HttpPost]
+        [ValidationModal]
         public async Task<IActionResult> CreateRegion(RegionRequestDTO requestDTO)
         {
+
             var data = _mapper.Map<Region>(requestDTO);
             await _regionRepository.PostRegion(data);
             var response = _mapper.Map<RegionDto>(data);
             return CreatedAtAction(nameof(GetById), new { id = data.Id }, response);
+
+
         }
 
         [HttpPut("{Id:guid}")]
+        [ValidationModal]
         public async Task<IActionResult> UpdateRegion(Guid Id, RegionRequestDTO regionRequestDTO)
         {
+
             var DataExits = await _regionRepository.GetById(Id);
             if (DataExits == null) return NotFound();
 
@@ -63,9 +70,12 @@ namespace NZWalksWebApi.Controllers
                 FullName = regionRequestDTO.FullName,
                 ImageUrl = regionRequestDTO.ImageUrl,
             };
-             var update =  await _regionRepository.UpdatRegion(updatedRegion);
+            var update = await _regionRepository.UpdatRegion(updatedRegion);
             var response = _mapper.Map<Region>(update);
             return Ok(response);
+
+
+
         }
 
         [HttpDelete("{Id:guid}")]

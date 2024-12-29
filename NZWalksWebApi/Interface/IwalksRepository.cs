@@ -9,5 +9,6 @@ namespace NZWalksWebApi.Interface
         Task<List<Walk>> GetAllWalks();
         Task<Walk> GetById(Guid Id);
         Task<Walk> Update(Guid id, Walk walk);
+        Task<Walk> DeleteWalk(Guid ID);
     }
 }

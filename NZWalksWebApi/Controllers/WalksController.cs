@@ -57,5 +57,11 @@ namespace NZWalksWebApi.Controllers
             return Ok(_mapper.Map<WalkDTO>(SentData));
         }
 
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteWalk(Guid id)
+        {
+            var data = await _walksRepository.DeleteWalk(id);
+            return Ok(_mapper.Map<WalkDTO>(data));
+        }
     }
 }

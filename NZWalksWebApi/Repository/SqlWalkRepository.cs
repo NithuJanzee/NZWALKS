@@ -55,5 +55,14 @@ namespace NZWalksWebApi.Repository
 
             return findData;
         }
+
+        public async Task<Walk> DeleteWalk(Guid ID)
+        {
+            var FindData = await _dbContext.walks.FirstOrDefaultAsync(x => x.Id == ID);
+            if (FindData == null) throw new Exception("Not Found yet");
+            _dbContext.walks.Remove(FindData);
+            await _dbContext.SaveChangesAsync();
+            return FindData;
+        }
     }
 }
