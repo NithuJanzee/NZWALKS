@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NZWalksWebApi.Data;
 using NZWalksWebApi.DTO;
 using NZWalksWebApi.Interface;
@@ -22,9 +23,18 @@ namespace NZWalksWebApi.Repository
             return walk;
         }
 
-        public async Task<List<Walk>> GetAllWalks()
+        public async Task<List<Walk>> GetAllWalks(string? filterOn = null, string? filterQuerry = null)
         {
-            return await _dbContext.walks.Include("Difficulty").Include("Region").ToListAsync();
+            var Walks = _dbContext.walks.Include("Difficulty").Include("Region").AsQueryable();
+            if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuerry) == false)
+            {
+                if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    Walks = Walks.Where(x => x.Name.Contains(filterQuerry));
+                }
+            }
+            return await Walks.ToListAsync();
+          
         }
 
         public async Task<Walk> GetById(Guid Id)
@@ -40,9 +50,9 @@ namespace NZWalksWebApi.Repository
         }
 
 
-        public async Task<Walk> Update (Guid id , Walk walk)
+        public async Task<Walk> Update(Guid id, Walk walk)
         {
-            var findData = await _dbContext.walks.FirstOrDefaultAsync(x =>x.Id == id);
+            var findData = await _dbContext.walks.FirstOrDefaultAsync(x => x.Id == id);
             if (findData == null) throw new Exception("Not Found");
 
             findData.Name = walk.Name;
