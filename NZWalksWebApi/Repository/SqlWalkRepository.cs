@@ -32,9 +32,15 @@ namespace NZWalksWebApi.Repository
                 {
                     Walks = Walks.Where(x => x.Name.Contains(filterQuerry));
                 }
+                else if (filterOn.Equals("lengthInKm", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (double.TryParse(filterQuerry, out double length))
+                    {
+                        Walks = Walks.Where(x => x.lengthInKm == length);
+                    }
+                }
             }
             return await Walks.ToListAsync();
-          
         }
 
         public async Task<Walk> GetById(Guid Id)
