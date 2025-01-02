@@ -23,24 +23,42 @@ namespace NZWalksWebApi.Repository
             return walk;
         }
 
-        public async Task<List<Walk>> GetAllWalks(string? filterOn = null, string? filterQuerry = null)
+        public async Task<List<Walk>> GetAllWalks(string? filterOn = null, string? filterQuerry = null
+            , string? sorting = null, bool IsAcending = true, int pageNumber = 1, int pageSize = 15)
         {
             var Walks = _dbContext.walks.Include("Difficulty").Include("Region").AsQueryable();
+            //Filtering
             if (string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuerry) == false)
             {
                 if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
                 {
                     Walks = Walks.Where(x => x.Name.Contains(filterQuerry));
                 }
-                else if (filterOn.Equals("lengthInKm", StringComparison.OrdinalIgnoreCase))
+                //else if (filterOn.Equals("lengthInKm", StringComparison.OrdinalIgnoreCase))
+                //{
+                //    if (double.TryParse(filterQuerry, out double length))
+                //    {
+                //        Walks = Walks.Where(x => x.lengthInKm == length);
+                //    }
+                //}
+            }
+            //sorting
+            if (string.IsNullOrWhiteSpace(sorting) == false)
+            {
+                if (sorting.Equals("Name", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (double.TryParse(filterQuerry, out double length))
-                    {
-                        Walks = Walks.Where(x => x.lengthInKm == length);
-                    }
+                    Walks = IsAcending ? Walks.OrderBy(x => x.Name) : Walks.OrderByDescending(x => x.Name);
+                }
+                else if (sorting.Equals("lengthInKm", StringComparison.OrdinalIgnoreCase))
+                {
+                    Walks = IsAcending ? Walks.OrderBy(x => x.lengthInKm) : Walks.OrderByDescending(x => x.lengthInKm);
                 }
             }
-            return await Walks.ToListAsync();
+
+            //Pagination
+            var SkipPages = (pageNumber - 1) * pageSize;
+
+            return await Walks.Skip(SkipPages).Take(pageSize).ToListAsync();
         }
 
         public async Task<Walk> GetById(Guid Id)

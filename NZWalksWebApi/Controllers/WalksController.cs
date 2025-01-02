@@ -34,9 +34,10 @@ namespace NZWalksWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllWalks([FromQuery] string? filterOn, [FromQuery] string? filterQuerry)
+        public async Task<IActionResult> GetAllWalks([FromQuery] string? filterOn, [FromQuery] string? filterQuerry,
+            [FromQuery] string? SortBy, bool IsAcending, [FromQuery] int pageNumber = 1 , [FromQuery] int pageSize = 15)
         {
-            var data = await _walksRepository.GetAllWalks(filterOn , filterQuerry);
+            var data = await _walksRepository.GetAllWalks(filterOn , filterQuerry , SortBy , IsAcending, pageNumber ,pageSize);
             return Ok(_mapper.Map<List<WalkDTO>>(data));
         }
 
